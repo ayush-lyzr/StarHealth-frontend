@@ -15,6 +15,13 @@ export function AuthProvider({ children }) {
   // Initialize auth state
   useEffect(() => {
     const initAuth = async () => {
+      // Skip auth check on login/password-reset pages to prevent redirect loops
+      const currentPath = window.location.pathname
+      if (currentPath === '/login' || currentPath === '/password-reset') {
+        setAuthLoading(false)
+        return
+      }
+
       // Skip if a redirect to login is already in progress
       if (getIsRedirecting()) {
         console.debug('Redirect in progress, skipping auth init')

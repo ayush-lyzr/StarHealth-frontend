@@ -50,6 +50,13 @@ export default function BootGuard({ children }) {
 
   // Health check effect - stable dependencies (empty array = run once)
   useEffect(() => {
+    // Skip health check on login/password-reset pages to prevent blocking
+    const currentPath = window.location.pathname
+    if (currentPath === '/login' || currentPath === '/password-reset') {
+      setReady(true)
+      return
+    }
+
     // Prevent duplicate polling
     if (pollingActiveRef.current || ready) {
       return
@@ -57,6 +64,7 @@ export default function BootGuard({ children }) {
 
     pollingActiveRef.current = true
     let timeoutId = null
+    const MAX_RETRIES = 3
 
     const checkBackendHealth = async () => {
       // Stop if already ready or unmounted
@@ -110,6 +118,22 @@ export default function BootGuard({ children }) {
           return
         }
 
+        // Check if we've exceeded max retries or it's a network error
+        const isNetworkError = error.message && (
+          error.message.includes('Failed to fetch') ||
+          error.message.includes('NetworkError') ||
+          error.name === 'TypeError'
+        )
+
+        if (isNetworkError || retryCount >= MAX_RETRIES) {
+          // Proceed anyway - don't block the app
+          pollingActiveRef.current = false
+          if (isMountedRef.current) {
+            setReady(true)
+          }
+          return
+        }
+
         // Don't log aborted requests as errors
         if (error.name === 'AbortError') {
           // console.log(`⏱️ Health check timeout (attempt ${retryCount + 1}), retrying...`)
@@ -121,7 +145,7 @@ export default function BootGuard({ children }) {
         const delay = Math.min(1000 * (retryCount + 1), 3000)
 
         timeoutId = setTimeout(() => {
-          if (isMountedRef.current && !ready) {
+          if (isMountedRef.current && !ready && retryCount < MAX_RETRIES) {
             setRetryCount(prev => prev + 1)
             // Recursive call for retry
             checkBackendHealth()

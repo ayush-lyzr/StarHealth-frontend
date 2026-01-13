@@ -50,6 +50,14 @@ export const DataPreloaderProvider = ({ children }) => {
   }, [])
 
   useEffect(() => {
+    // Skip preloading on login/password-reset pages to prevent 401 redirect loops
+    const currentPath = window.location.pathname
+    if (currentPath === '/login' || currentPath === '/password-reset') {
+      setLoading(false)
+      setPreloadComplete(true)
+      return
+    }
+
     // Preload all data on app initialization
     const preloadAllData = async () => {
       // console.log('🚀 Preloading all section data...')

@@ -165,6 +165,13 @@ export const AgentsDataProvider = ({ children }) => {
     useEffect(() => {
         isMountedRef.current = true;
 
+        // Skip fetching on login/password-reset pages to prevent 401 redirect loops
+        const currentPath = window.location.pathname
+        if (currentPath === '/login' || currentPath === '/password-reset') {
+            setLoading(false)
+            return
+        }
+
         // 🔒 PERSISTENCE: Try to load from localStorage first
         const cached = localStorage.getItem('agents_stats_cache');
         if (cached) {

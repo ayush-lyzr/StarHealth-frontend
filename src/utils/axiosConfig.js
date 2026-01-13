@@ -104,8 +104,10 @@ apiClient.interceptors.response.use(
           // Also clear user data from localStorage if we are cleaning up
           localStorage.removeItem('auth_user')
 
-          if (window.location.pathname !== '/login') {
-            window.location.href = '/login'
+          // Only redirect if not already on login or password-reset page
+          const currentPath = window.location.pathname
+          if (currentPath !== '/login' && currentPath !== '/password-reset') {
+            window.location.replace('/login')
           }
         }
         // Return rejected promise without triggering more redirects
