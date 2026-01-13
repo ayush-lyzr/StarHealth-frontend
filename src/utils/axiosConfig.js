@@ -13,9 +13,24 @@ import axios from 'axios'
 // Memory storage for access token (more secure than localStorage)
 let memoryToken = null
 
+// Flag to prevent infinite redirect loops
+let isRedirecting = false
+
 // Function to set the token (exported to be used by AuthContext)
 export const setAuthToken = (token) => {
   memoryToken = token
+  // Reset redirect flag when a valid token is set (successful login)
+  if (token) {
+    isRedirecting = false
+  }
+}
+
+// Function to check if we're currently redirecting
+export const getIsRedirecting = () => isRedirecting
+
+// Function to reset the redirect flag (for manual control if needed)
+export const resetRedirectFlag = () => {
+  isRedirecting = false
 }
 
 // Create axios instance with default config
@@ -53,7 +68,8 @@ apiClient.interceptors.response.use(
     const originalRequest = error.config
 
     // Handle 401 Unauthorized - Try to refresh token
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    // Skip if already redirecting to prevent infinite loops
+    if (error.response?.status === 401 && !originalRequest._retry && !isRedirecting) {
       originalRequest._retry = true
 
       try {
@@ -78,15 +94,22 @@ apiClient.interceptors.response.use(
           return apiClient(originalRequest)
         }
       } catch (refreshError) {
-        console.error('Session expired, please login again', refreshError)
-        // Refresh failed - clear auth and redirect
-        setAuthToken(null)
-        // Also clear user data from localStorage if we are cleaning up
-        localStorage.removeItem('auth_user')
+        // Only redirect once - set the flag to prevent infinite loops
+        if (!isRedirecting) {
+          console.error('Session expired, please login again', refreshError)
+          isRedirecting = true
 
-        if (window.location.pathname !== '/login') {
-          window.location.href = '/login'
+          // Refresh failed - clear auth and redirect
+          setAuthToken(null)
+          // Also clear user data from localStorage if we are cleaning up
+          localStorage.removeItem('auth_user')
+
+          if (window.location.pathname !== '/login') {
+            window.location.href = '/login'
+          }
         }
+        // Return rejected promise without triggering more redirects
+        return Promise.reject(refreshError)
       }
     }
 

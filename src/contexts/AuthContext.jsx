@@ -3,7 +3,7 @@
  * Manages user authentication state and provides auth methods
  */
 import { createContext, useContext, useState, useEffect } from 'react'
-import apiClient, { setAuthToken } from '../utils/axiosConfig'
+import apiClient, { setAuthToken, getIsRedirecting } from '../utils/axiosConfig'
 
 const AuthContext = createContext(null)
 
@@ -15,6 +15,13 @@ export function AuthProvider({ children }) {
   // Initialize auth state
   useEffect(() => {
     const initAuth = async () => {
+      // Skip if a redirect to login is already in progress
+      if (getIsRedirecting()) {
+        console.debug('Redirect in progress, skipping auth init')
+        setAuthLoading(false)
+        return
+      }
+
       try {
         // Try to recover session from HttpOnly cookie
         // We use a direct call to verify validity
