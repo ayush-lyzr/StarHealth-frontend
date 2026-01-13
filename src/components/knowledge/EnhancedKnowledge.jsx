@@ -20,7 +20,7 @@ const EnhancedKnowledge = () => {
   const fetchKnowledge = async () => {
     try {
       setLoading(true)
-      const response = await axios.get('http://localhost:8000/api/knowledge')
+      const response = await axios.get('http://3.231.155.2:8000/api/knowledge')
       setKnowledge(response.data)
     } catch (error) {
       console.error('Error fetching knowledge:', error)
@@ -34,11 +34,11 @@ const EnhancedKnowledge = () => {
     try {
       if (editing) {
         await axios.put(
-          `http://localhost:8000/api/knowledge/${editing._id}`,
+          `http://3.231.155.2:8000/api/knowledge/${editing._id}`,
           formData
         )
       } else {
-        await axios.post('http://localhost:8000/api/knowledge', formData)
+        await axios.post('http://3.231.155.2:8000/api/knowledge', formData)
       }
       fetchKnowledge()
       resetForm()
@@ -60,7 +60,7 @@ const EnhancedKnowledge = () => {
   const handleDelete = async (id) => {
     if (!confirm('Are you sure you want to delete this knowledge entry?')) return
     try {
-      await axios.delete(`http://localhost:8000/api/knowledge/${id}`)
+      await axios.delete(`http://3.231.155.2:8000/api/knowledge/${id}`)
       fetchKnowledge()
     } catch (error) {
       console.error('Error deleting knowledge:', error)
@@ -225,7 +225,7 @@ const EnhancedKnowledge = () => {
               {searchTerm || filterType !== 'all' ? 'No matching knowledge found' : 'No knowledge entries yet'}
             </h3>
             <p className="text-gray-500 mb-6">
-              {searchTerm || filterType !== 'all' 
+              {searchTerm || filterType !== 'all'
                 ? 'Try adjusting your search or filters'
                 : 'Get started by adding your first knowledge entry'}
             </p>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api'
+const API_BASE_URL = 'http://3.231.155.2:8000/api'
 
 export default function PasswordReset() {
   const [email, setEmail] = useState('')

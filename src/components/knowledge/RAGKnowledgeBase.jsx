@@ -74,7 +74,7 @@ const RAGKnowledgeBase = () => {
 
   const fetchDatabases = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/rag/databases')
+      const response = await axios.get('http://3.231.155.2:8000/api/rag/databases')
       if (response.data.success) {
         setDatabases(response.data.databases)
       }
@@ -119,7 +119,7 @@ const RAGKnowledgeBase = () => {
 
       const cacheBuster = forceRefresh ? `&t=${Date.now()}` : ''
       const response = await axios.get(
-        `http://localhost:8000/api/rag/content?rag_id=${activeRagId}${cacheBuster}`
+        `http://3.231.155.2:8000/api/rag/content?rag_id=${activeRagId}${cacheBuster}`
       )
       // console.log('✅ RAG content response:', response.data)
 
@@ -166,7 +166,7 @@ const RAGKnowledgeBase = () => {
       formData.append('rag_id_form', activeRagId)
 
       const response = await axios.post(
-        `http://localhost:8000/api/rag/file?rag_id=${activeRagId}`,
+        `http://3.231.155.2:8000/api/rag/file?rag_id=${activeRagId}`,
         formData,
         {
           headers: {
@@ -210,7 +210,7 @@ const RAGKnowledgeBase = () => {
       setUploading(true)
       const activeRagId = databases[selectedDatabase]?.id
       const response = await axios.post(
-        `http://localhost:8000/api/rag/text?rag_id=${activeRagId}`,
+        `http://3.231.155.2:8000/api/rag/text?rag_id=${activeRagId}`,
         {
           text: textContent,
           source: textSource || 'Text Input',
@@ -247,7 +247,7 @@ const RAGKnowledgeBase = () => {
     try {
       const activeRagId = databases[selectedDatabase]?.id
       const response = await axios.delete(
-        `http://localhost:8000/api/rag/content/${encodeURIComponent(contentId)}?rag_id=${activeRagId}`
+        `http://3.231.155.2:8000/api/rag/content/${encodeURIComponent(contentId)}?rag_id=${activeRagId}`
       )
       if (response.data.success) {
         alert('Content deleted successfully!')
@@ -277,7 +277,7 @@ const RAGKnowledgeBase = () => {
       const activeRagId = databases[selectedDatabase]?.id
       const deleteResults = await Promise.allSettled(
         Array.from(selectedItems).map(id =>
-          axios.delete(`http://localhost:8000/api/rag/content/${encodeURIComponent(id)}?rag_id=${activeRagId}`)
+          axios.delete(`http://3.231.155.2:8000/api/rag/content/${encodeURIComponent(id)}?rag_id=${activeRagId}`)
         )
       )
 

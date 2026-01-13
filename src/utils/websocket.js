@@ -145,10 +145,8 @@ let dashboardWebSocket = null
 
 export function getDashboardWebSocket() {
   if (!dashboardWebSocket) {
-    // Use the backend port directly (8000 for Python backend)
-    const wsUrl = window.location.protocol === 'https:'
-      ? `wss://${window.location.hostname}:8000/ws`
-      : `ws://${window.location.hostname}:8000/ws`
+    // Use the hardcoded backend URL
+    const wsUrl = 'ws://3.231.155.2:8000/ws'
 
     dashboardWebSocket = new WebSocketClient(wsUrl, {
       reconnect: true,

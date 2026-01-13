@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api'
+const API_BASE_URL = 'http://3.231.155.2:8000/api'
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -13,7 +13,7 @@ export default function Signup() {
   })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  
+
   const navigate = useNavigate()
 
   const handleChange = (e) => {
@@ -34,9 +34,9 @@ export default function Signup() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       })
-      
+
       const data = await response.json()
-      
+
       if (data.success) {
         // Store token and user
         localStorage.setItem('auth_token', data.token)

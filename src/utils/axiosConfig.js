@@ -1,6 +1,6 @@
 /**
  * Axios Configuration with Authentication
- * 
+ *
  * Production-grade axios instance with:
  * - memory-based token storage (secure)
  * - Automatic token injection
@@ -20,7 +20,7 @@ export const setAuthToken = (token) => {
 
 // Create axios instance with default config
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
+  baseURL: 'http://3.231.155.2:8000/api',
   timeout: 30000, // 30 seconds
   headers: {
     'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ apiClient.interceptors.response.use(
         // Attempt to refresh token using HttpOnly cookie
         // We use a new axios instance to avoid infinite loops
         const response = await axios.post(
-          `${import.meta.env.VITE_API_BASE_URL || '/api'}/auth/refresh`,
+          'http://3.231.155.2:8000/api/auth/refresh',
           {},
           { withCredentials: true }
         )
