@@ -1,0 +1,299 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #333333;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .dark body {
+    color: #FFFFFF;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Enhanced animations for interactivity */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Tabular numerals for metrics */
+@font-feature-settings {
+  font-variant-numeric: tabular-nums;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* Smooth transitions for micro-interactions */
+.transition-all-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Card hover lift effect */
+.card-hover {
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.dark .card-hover:hover {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+/* Button hover background shift */
+.btn-hover {
+  transition: background-color 0.2s ease-out, transform 0.1s ease-out;
+}
+
+.btn-hover:hover {
+  transform: translateY(-1px);
+}
+
+.btn-hover:active {
+  transform: translateY(0);
+}
+
+/* Chart fade-in animation */
+@keyframes chartFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chart-animate {
+  animation: chartFadeIn 0.6s ease-out;
+}
+
+/* Tooltip fade-in */
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.tooltip-fade-in {
+  animation: tooltipFadeIn 0.2s ease-out;
+}
+
+/* Sparkline container */
+.sparkline-container {
+  height: 40px;
+  width: 100%;
+  opacity: 0.6;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.4s ease-out;
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.3s ease-out;
+}
+
+.animate-pulse-slow {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Glass morphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass {
+  background: rgba(30, 41, 59, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Smooth transitions */
+* {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+/* TailAdmin Menu Item Styles */
+/* TailAdmin Menu Item Styles - Refined for "Pill" Design */
+.menu-item {
+  @apply flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 w-full min-h-[44px];
+}
+
+.menu-item-active {
+  @apply bg-blue-50 text-blue-700 dark:bg-blue-600/10 dark:text-blue-400;
+}
+
+.menu-item-inactive {
+  @apply text-gray-500 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white;
+}
+
+.menu-item-icon-size {
+  @apply flex items-center justify-center w-5 h-5;
+}
+
+.menu-item-icon-active {
+  @apply text-blue-600 dark:text-blue-400;
+}
+
+.menu-item-icon-inactive {
+  @apply text-gray-400 group-hover:text-gray-600 dark:text-gray-500 dark:group-hover:text-gray-300;
+}
+
+.menu-item-text {
+  @apply text-sm;
+}
+
+/* Scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Z-index utilities */
+.z-99999 {
+  z-index: 99999;
+}
+
+/* TailAdmin Text Sizes */
+.text-title-sm {
+  font-size: 30px;
+  line-height: 38px;
+  font-weight: 700;
+}
+
+.text-title-md {
+  font-size: 36px;
+  line-height: 44px;
+  font-weight: 700;
+}
+
+.text-title-lg {
+  font-size: 48px;
+  line-height: 60px;
+  font-weight: 700;
+}
+
+/* TailAdmin Font Family */
+body {
+  font-family: 'Outfit', 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
