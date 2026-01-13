@@ -142,7 +142,7 @@ const Dashboard = () => {
         'Content-Type': 'application/json'
       }
 
-      const url = `/api/dashboard?days=${days}`
+      const url = `http://3.231.155.2:8000/api/dashboard?days=${days}`
       const response = await fetch(url, { headers })
 
       if (response.status === 202) {
