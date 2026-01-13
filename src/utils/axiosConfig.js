@@ -25,6 +25,7 @@ const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true, // 🔒 Required for HttpOnly cookie-based auth in cross-origin (production)
 })
 
 // Request interceptor - Add auth token to all requests
