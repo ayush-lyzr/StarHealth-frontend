@@ -166,7 +166,8 @@ export const AgentsDataProvider = ({ children }) => {
         isMountedRef.current = true;
 
         // Skip fetching on login/password-reset pages to prevent 401 redirect loops
-        const currentPath = window.location.pathname
+        // Handle both with and without trailing slash
+        const currentPath = window.location.pathname.replace(/\/$/, '') // Remove trailing slash
         if (currentPath === '/login' || currentPath === '/password-reset') {
             setLoading(false)
             return

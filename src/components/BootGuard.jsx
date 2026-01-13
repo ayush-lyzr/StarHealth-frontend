@@ -51,7 +51,8 @@ export default function BootGuard({ children }) {
   // Health check effect - stable dependencies (empty array = run once)
   useEffect(() => {
     // Skip health check on login/password-reset pages to prevent blocking
-    const currentPath = window.location.pathname
+    // Handle both with and without trailing slash
+    const currentPath = window.location.pathname.replace(/\/$/, '') // Remove trailing slash
     if (currentPath === '/login' || currentPath === '/password-reset') {
       setReady(true)
       return

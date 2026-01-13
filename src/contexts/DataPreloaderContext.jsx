@@ -51,7 +51,8 @@ export const DataPreloaderProvider = ({ children }) => {
 
   useEffect(() => {
     // Skip preloading on login/password-reset pages to prevent 401 redirect loops
-    const currentPath = window.location.pathname
+    // Handle both with and without trailing slash
+    const currentPath = window.location.pathname.replace(/\/$/, '') // Remove trailing slash
     if (currentPath === '/login' || currentPath === '/password-reset') {
       setLoading(false)
       setPreloadComplete(true)

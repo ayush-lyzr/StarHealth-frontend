@@ -69,7 +69,11 @@ apiClient.interceptors.response.use(
 
     // Handle 401 Unauthorized - Try to refresh token
     // Skip if already redirecting to prevent infinite loops
-    if (error.response?.status === 401 && !originalRequest._retry && !isRedirecting) {
+    // Also skip if already on login/password-reset page
+    const currentPath = window.location.pathname.replace(/\/$/, '')
+    const isOnAuthPage = currentPath === '/login' || currentPath === '/password-reset'
+
+    if (error.response?.status === 401 && !originalRequest._retry && !isRedirecting && !isOnAuthPage) {
       originalRequest._retry = true
 
       try {
@@ -95,7 +99,11 @@ apiClient.interceptors.response.use(
         }
       } catch (refreshError) {
         // Only redirect once - set the flag to prevent infinite loops
-        if (!isRedirecting) {
+        // Double-check we're not already on auth page
+        const currentPath = window.location.pathname.replace(/\/$/, '')
+        const isOnAuthPage = currentPath === '/login' || currentPath === '/password-reset'
+
+        if (!isRedirecting && !isOnAuthPage) {
           console.error('Session expired, please login again', refreshError)
           isRedirecting = true
 
@@ -104,11 +112,8 @@ apiClient.interceptors.response.use(
           // Also clear user data from localStorage if we are cleaning up
           localStorage.removeItem('auth_user')
 
-          // Only redirect if not already on login or password-reset page
-          const currentPath = window.location.pathname
-          if (currentPath !== '/login' && currentPath !== '/password-reset') {
-            window.location.replace('/login')
-          }
+          // Redirect to login
+          window.location.replace('/login')
         }
         // Return rejected promise without triggering more redirects
         return Promise.reject(refreshError)

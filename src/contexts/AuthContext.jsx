@@ -16,7 +16,8 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const initAuth = async () => {
       // Skip auth check on login/password-reset pages to prevent redirect loops
-      const currentPath = window.location.pathname
+      // Handle both with and without trailing slash
+      const currentPath = window.location.pathname.replace(/\/$/, '') // Remove trailing slash
       if (currentPath === '/login' || currentPath === '/password-reset') {
         setAuthLoading(false)
         return
