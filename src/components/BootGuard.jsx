@@ -1,6 +1,6 @@
 /**
  * BootGuard Component - Enterprise Refined
- * 
+ *
  * 🔒 ENTERPRISE: Polls /health/live until backend is alive.
  * Stops polling immediately when backend responds.
  * Stable useEffect dependencies to prevent infinite loops.
@@ -77,7 +77,7 @@ export default function BootGuard({ children }) {
 
       try {
         // 🔒 ENTERPRISE: Use /health/live (never fails, no dependencies)
-        const response = await fetch('/health/live', {
+        const response = await fetch('http://3.231.155.2:8000/health/live', {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
           signal: abortControllerRef.current.signal,
