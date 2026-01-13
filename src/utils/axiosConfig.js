@@ -20,7 +20,7 @@ export const setAuthToken = (token) => {
 
 // Create axios instance with default config
 const apiClient = axios.create({
-  baseURL: 'http://3.231.155.2:8000/api',
+  baseURL: 'https://star-health-api.rapid.studio.lyzr.ai/api',
   timeout: 30000, // 30 seconds
   headers: {
     'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ apiClient.interceptors.response.use(
         // Attempt to refresh token using HttpOnly cookie
         // We use a new axios instance to avoid infinite loops
         const response = await axios.post(
-          'http://3.231.155.2:8000/api/auth/refresh',
+          'https://star-health-api.rapid.studio.lyzr.ai/api/auth/refresh',
           {},
           { withCredentials: true }
         )

@@ -3,7 +3,7 @@ import { useTheme } from '../contexts/ThemeContext';
 import BarChartApex from './charts/BarChartApex';
 import StarLoader from './ui/StarLoader';
 
-const API_URL = 'http://3.231.155.2:8000';
+const API_URL = 'https://star-health-api.rapid.studio.lyzr.ai';
 
 const ProductTraces = () => {
   const { isDark } = useTheme();

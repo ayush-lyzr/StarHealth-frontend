@@ -64,7 +64,7 @@ export const DataPreloaderProvider = ({ children }) => {
 
       // Preload Knowledge/RAG databases
       try {
-        const ragResponse = await axios.get('http://3.231.155.2:8000/api/rag/databases', {
+        const ragResponse = await axios.get('https://star-health-api.rapid.studio.lyzr.ai/api/rag/databases', {
           timeout: 30000, // Increased to 30s for cold start
         })
         if (ragResponse.data.success && ragResponse.data.databases) {
@@ -73,7 +73,7 @@ export const DataPreloaderProvider = ({ children }) => {
           if (starHealthRagId) {
             try {
               const contentResponse = await axios.get(
-                `http://3.231.155.2:8000/api/rag/content?rag_id=${starHealthRagId}`,
+                `https://star-health-api.rapid.studio.lyzr.ai/api/rag/content?rag_id=${starHealthRagId}`,
                 { timeout: 30000 } // Increased to 30s for cold start
               )
               setPreloadedData(prev => ({
@@ -111,7 +111,7 @@ export const DataPreloaderProvider = ({ children }) => {
 
       // Preload Agent Configs
       try {
-        const configResponse = await axios.get('http://3.231.155.2:8000/api/agents/config', {
+        const configResponse = await axios.get('https://star-health-api.rapid.studio.lyzr.ai/api/agents/config', {
           timeout: 30000, // Increased to 30s for cold start
         })
         if (configResponse.data && configResponse.data.success) {
@@ -129,7 +129,7 @@ export const DataPreloaderProvider = ({ children }) => {
 
       // Preload Users
       try {
-        const usersResponse = await axios.get('http://3.231.155.2:8000/api/users', {
+        const usersResponse = await axios.get('https://star-health-api.rapid.studio.lyzr.ai/api/users', {
           timeout: 30000, // Increased to 30s for cold start
         })
         const usersData = usersResponse.data.users || usersResponse.data || []
@@ -160,12 +160,12 @@ export const DataPreloaderProvider = ({ children }) => {
           // Dashboard refresh is handled by DashboardContext
           break
         case 'knowledge':
-          const ragResponse = await axios.get('http://3.231.155.2:8000/api/rag/databases')
+          const ragResponse = await axios.get('https://star-health-api.rapid.studio.lyzr.ai/api/rag/databases')
           if (ragResponse.data.success && ragResponse.data.databases) {
             const starHealthRagId = ragResponse.data.databases.starHealth?.id
             if (starHealthRagId) {
               const contentResponse = await axios.get(
-                `http://3.231.155.2:8000/api/rag/content?rag_id=${starHealthRagId}`
+                `https://star-health-api.rapid.studio.lyzr.ai/api/rag/content?rag_id=${starHealthRagId}`
               )
               const knowledgeData = {
                 databases: ragResponse.data.databases,
@@ -181,7 +181,7 @@ export const DataPreloaderProvider = ({ children }) => {
           }
           break
         case 'agentConfigs':
-          const configResponse = await axios.get('http://3.231.155.2:8000/api/agents/config')
+          const configResponse = await axios.get('https://star-health-api.rapid.studio.lyzr.ai/api/agents/config')
           if (configResponse.data && configResponse.data.success) {
             setPreloadedData(prev => ({
               ...prev,
@@ -191,7 +191,7 @@ export const DataPreloaderProvider = ({ children }) => {
           }
           break
         case 'users':
-          const usersResponse = await axios.get('http://3.231.155.2:8000/api/users')
+          const usersResponse = await axios.get('https://star-health-api.rapid.studio.lyzr.ai/api/users')
           const usersData = usersResponse.data.users || usersResponse.data || []
           setPreloadedData(prev => ({
             ...prev,

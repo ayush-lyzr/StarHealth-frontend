@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const API_BASE_URL = 'http://3.231.155.2:8000/api'
+const API_BASE_URL = 'https://star-health-api.rapid.studio.lyzr.ai/api'
 
 export default function PasswordReset() {
   const [email, setEmail] = useState('')

@@ -142,7 +142,7 @@ const Dashboard = () => {
         'Content-Type': 'application/json'
       }
 
-      const url = `http://3.231.155.2:8000/api/dashboard?days=${days}`
+      const url = `https://star-health-api.rapid.studio.lyzr.ai/api/dashboard?days=${days}`
       const response = await fetch(url, { headers })
 
       if (response.status === 202) {

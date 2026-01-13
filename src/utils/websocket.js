@@ -146,7 +146,7 @@ let dashboardWebSocket = null
 export function getDashboardWebSocket() {
   if (!dashboardWebSocket) {
     // Use the hardcoded backend URL
-    const wsUrl = 'ws://3.231.155.2:8000/ws'
+    const wsUrl = 'wss://star-health-api.rapid.studio.lyzr.ai/ws'
 
     dashboardWebSocket = new WebSocketClient(wsUrl, {
       reconnect: true,

@@ -4,7 +4,7 @@ import { useAuth } from '../../contexts/AuthContext'
 import { useTheme } from '../../contexts/ThemeContext'
 import apiClient from '../../utils/axiosConfig'
 
-const API_BASE_URL = 'http://3.231.155.2:8000/api'
+const API_BASE_URL = 'https://star-health-api.rapid.studio.lyzr.ai/api'
 
 export default function Login() {
   const navigate = useNavigate()

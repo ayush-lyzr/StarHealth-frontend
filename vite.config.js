@@ -7,11 +7,11 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://3.231.155.2:8000',
+        target: 'https://star-health-api.rapid.studio.lyzr.ai',
         changeOrigin: true
       },
       '/ws': {
-        target: 'ws://3.231.155.2:8000',
+        target: 'wss://star-health-api.rapid.studio.lyzr.ai',
         ws: true
       }
     }

@@ -77,7 +77,7 @@ export default function BootGuard({ children }) {
 
       try {
         // 🔒 ENTERPRISE: Use /health/live (never fails, no dependencies)
-        const response = await fetch('http://3.231.155.2:8000/health/live', {
+        const response = await fetch('https://star-health-api.rapid.studio.lyzr.ai/health/live', {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
           signal: abortControllerRef.current.signal,

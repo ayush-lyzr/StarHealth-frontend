@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 
-const API_BASE_URL = 'http://3.231.155.2:8000/api'
+const API_BASE_URL = 'https://star-health-api.rapid.studio.lyzr.ai/api'
 
 export default function Signup() {
   const [formData, setFormData] = useState({
